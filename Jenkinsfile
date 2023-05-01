@@ -31,3 +31,16 @@ pipeline {
 			}
 		}
         }
+        
+		stage('Push') {
+
+			steps {
+				sh 'docker push giantlife/new-flask-app'
+			}
+		}
+	
+	post {
+		always {
+			sh 'docker logout'
+        }
+    }
