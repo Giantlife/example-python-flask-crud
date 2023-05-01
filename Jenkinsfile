@@ -4,7 +4,7 @@ pipeline {
         SSH_CRED = credentials('flask-app-credentials')
         SSH_HOST = 'ec2-3-98-58-81.ca-central-1.compute.amazonaws.com'
         SSH_USER = 'ubuntu'
-        DOCk = credentials('my-docker-hub-creds')
+        DOCKERHUB_CREDENTIALS = credentials('my-docker-hub-creds')
     }
     stages {
         stage('Example') {
@@ -18,7 +18,7 @@ pipeline {
     
         stage('Build') {
             steps {
-                sh 'docker build -t giantlife/new-flask-app .'
+                sh 'docker build -t giantlife/new-flask-app -f /home/ubuntu/example-python-flask-crud/Dockerfile .'
             }
         }
     }
