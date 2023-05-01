@@ -6,6 +6,7 @@ pipeline {
         SSH_USER = 'ubuntu'
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
     }
+
     stages {
         stage('Example') {
             steps {
@@ -21,8 +22,7 @@ pipeline {
                 sh 'docker build -t giantlife/new-flask-app -f /home/ubuntu/example-python-flask-crud/Dockerfile .'
             }
         }
-    }
-}
+
         stage('Login') {
 
 			steps {
@@ -36,10 +36,12 @@ pipeline {
 				sh 'docker push giantlife/new-flask-app'
 			}
 		}
-	
+    }
 
 	post {
 		always {
 			sh 'docker logout'
 		}
 	}
+
+}
