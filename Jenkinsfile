@@ -5,7 +5,7 @@ pipeline {
         SSH_HOST = 'ec2-3-99-144-68.ca-central-1.compute.amazonaws.com'
         SSH_USER = 'ubuntu'
         IMAGE_NAME = "my-flask-app"
-        DOCKERFILE = "Dockerfile"
+        DOCKERFILE_PATH = "${WORKSPACE}/Dockerfile"
     }
     stages {
         stage('Example') {
@@ -17,12 +17,11 @@ pipeline {
                 }
             }    
         }
+    
         stage('Build') {
             steps {
-            script {
-            docker.build("${IMAGE_NAME}", "-f ${DOCKERFILE} .")
+                sh "docker build -t ${IMAGE_NAME} -f ${DOCKERFILE_PATH} ."
             }
         }
     }
-}
 }
