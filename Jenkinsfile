@@ -23,24 +23,4 @@ pipeline {
         }
     }
 }
-        stage('Login') {
-
-			steps {
-				  withCredentials([usernamePassword(credentialsId: 'jenkins-app-deploy', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                    sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-			}
-		}
-        }
         
-		stage('Push') {
-
-			steps {
-				sh 'docker push giantlife/new-flask-app'
-			}
-		}
-	
-	post {
-		always {
-			sh 'docker logout'
-        }
-    }
