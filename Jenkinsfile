@@ -17,4 +17,3 @@ pipeline {
         }
     }
 }
-#my name 
