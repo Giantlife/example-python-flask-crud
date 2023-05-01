@@ -2,9 +2,9 @@ pipeline {
     agent any
     environment {
         SSH_CRED = credentials('flask-app-credentials')
-        SSH_HOST = 'ec2-3-98-58-81.ca-central-1.compute.amazonaws.com'
+        SSH_HOST = 'ec2-35-183-115-102.ca-central-1.compute.amazonaws.com'
         SSH_USER = 'ubuntu'
-        
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
     }
     stages {
         stage('Example') {
@@ -23,4 +23,23 @@ pipeline {
         }
     }
 }
-        
+        stage('Login') {
+
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+
+		stage('Push') {
+
+			steps {
+				sh 'docker push giantlife/new-flask-app'
+			}
+		}
+	
+
+	post {
+		always {
+			sh 'docker logout'
+		}
+	}
