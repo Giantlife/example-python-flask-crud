@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         SSH_CRED = credentials('flask-app-credentials') 
-         def CONNECT = "ssh -i $SSH_CRED -t -o StrictHostKeyChecking=no ubuntu@ec2-3-99-144-68.ca-central-1.compute.amazonaws.com"
+         def CONNECT = ssh -i "${SSH_CRED}" -t -o StrictHostKeyChecking=no ubuntu@ec2-3-99-144-68.ca-central-1.compute.amazonaws.com
     }
     stages {
         stage('Build') {
