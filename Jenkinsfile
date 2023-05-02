@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         SSH_CRED = credentials('flask-app-credentials')
-        SSH_HOST = 'ec2-35-183-115-102.ca-central-1.compute.amazonaws.com'
+        SSH_HOST = 'ec2-3-98-139-109.ca-central-1.compute.amazonaws.com'
         SSH_USER = 'ubuntu'
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
     }
@@ -19,7 +19,7 @@ pipeline {
     
         stage('Build') {
             steps {
-                sh 'docker build -t giantlife/new-flask-app -f /home/ubuntu/example-python-flask-crud/Dockerfile .'
+                sh 'docker build -t giantlife/new-flask-app-v1 -f /home/ubuntu/example-python-flask-crud/Dockerfile .'
             }
         }
 
@@ -33,7 +33,7 @@ pipeline {
 		stage('Push') {
 
 			steps {
-				sh 'docker push giantlife/new-flask-app'
+				sh 'docker push giantlife/new-flask-app-v1'
 			}
 		}
     }
